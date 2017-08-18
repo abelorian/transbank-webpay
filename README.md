@@ -66,7 +66,7 @@ response.detail_output.authorization_code
 => 1234
 response.detail_output.payment_type_code
 => "VN"
-response.response_code
+response.detail_output.response_code
 => 0
 response.session_id
 => 123456
