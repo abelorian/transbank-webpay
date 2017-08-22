@@ -29,7 +29,9 @@ module Transbank
         node = doc.at_xpath('//soap:Body')
         node_canonicalize = node.canonicalize(Nokogiri::XML::XML_C14N_EXCLUSIVE_1_0, nil, nil)
         digest = OpenSSL::Digest::SHA1.new.reset.digest(node_canonicalize)
-        Base64.encode64(digest).strip
+        c_digest = Base64.encode64(digest).strip
+        Transbank::Webpay.log "----- calculated_digest -----"
+        c_digest
       end
 
       # def server_cert
@@ -46,6 +48,8 @@ module Transbank
       # Validations
       def validate_response_code!
         Transbank::Webpay.log "----- validate_response_code -----"
+        Transbank::Webpay.log "----- xml_response_code -----"
+        Transbank::Webpay.log xml_response_code
         return if xml_response_code.empty?
         @errors << response_code_display if xml_response_code != '0'
       end
@@ -56,6 +60,8 @@ module Transbank
 
         @errors += xml_error_display
         @errors << content.message if content.respond_to?(:message) && @errors.empty?
+        Transbank::Webpay.log "----- content.message -----"
+        Transbank::Webpay.log content.message
       end
 
       def validate_document
@@ -70,6 +76,12 @@ module Transbank
           Nokogiri::XML::XML_C14N_EXCLUSIVE_1_0, ["soap"], nil
         )
 
+        Transbank::Webpay.log "----- signature_decode -----"
+        Transbank::Webpay.log signature_decode
+
+        Transbank::Webpay.log "----- signed_node_canonicalize -----"
+        Transbank::Webpay.log signed_node_canonicalize
+
         Transbank::Webpay::Vault.pub_key.verify(
           OpenSSL::Digest::SHA1.new,
           signature_decode,
@@ -79,6 +91,8 @@ module Transbank
 
       def validate_digest
         Transbank::Webpay.log "----- validate_digest -----"
+        Transbank::Webpay.log "----- digest -----"
+        Transbank::Webpay.log digest
         calculated_digest == digest
       end
     end
