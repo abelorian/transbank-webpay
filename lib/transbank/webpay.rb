@@ -4,6 +4,7 @@ require 'nokogiri'
 require 'signer'
 require 'ostruct'
 require 'builder'
+require 'logger'
 
 require 'transbank/webpay/version'
 require 'transbank/webpay/configuration'
@@ -25,6 +26,7 @@ module Transbank
   module Webpay
     class << self
       attr_reader :configuration
+      attr_reader :log
 
       # Delegate api
       Api.instance_methods.each { |m| define_method(m) { |*args| api.send(m, *args) } }
@@ -37,6 +39,19 @@ module Transbank
       def api
         @api ||= Api.new
       end
+
+      def log message
+        logger.info message if true
+      end
+
+      protected
+
+      def logger
+        @logger ||= Logger.new($stdout).tap do |log|
+          log.progname = self.name
+        end
+      end
+
     end
   end
 end
