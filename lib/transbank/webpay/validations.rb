@@ -31,6 +31,7 @@ module Transbank
         digest = OpenSSL::Digest::SHA1.new.reset.digest(node_canonicalize)
         c_digest = Base64.encode64(digest).strip
         Transbank::Webpay.log "----- calculated_digest -----"
+        Transbank::Webpay.log c_digest
         c_digest
       end
 
