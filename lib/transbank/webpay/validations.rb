@@ -77,17 +77,17 @@ module Transbank
           Nokogiri::XML::XML_C14N_EXCLUSIVE_1_0, ["soap"], nil
         )
 
-        Transbank::Webpay.log "----- signature_decode -----"
-        Transbank::Webpay.log signature_decode
-
         Transbank::Webpay.log "----- signed_node_canonicalize -----"
         Transbank::Webpay.log signed_node_canonicalize
 
-        Transbank::Webpay::Vault.pub_key.verify(
+        response = Transbank::Webpay::Vault.pub_key.verify(
           OpenSSL::Digest::SHA1.new,
           signature_decode,
           signed_node_canonicalize
         )
+
+        Transbank::Webpay.log "----- validate_signature ----- #{response}"
+        response
       end
 
       def validate_digest

@@ -25,6 +25,8 @@ module Transbank
         rescue match_class(rescue_exceptions) => error
           ExceptionResponse.new error, action, params
         end
+        Transbank::Webpay.log "----- response -----"
+        Transbank::Webpay.log @response
       end
 
       private
