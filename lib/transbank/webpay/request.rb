@@ -8,6 +8,13 @@ module Transbank
         @action = action
         @document = Document.new(action, params)
         @client = Client.new wsdl_url
+        Transbank::Webpay.log "----- Transbank Webpay Request -----"
+        Transbank::Webpay.log "----- action -----"
+        Transbank::Webpay.log action
+        Transbank::Webpay.log "----- params -----"
+        Transbank::Webpay.log params
+        Transbank::Webpay.log "----- document -----"
+        Transbank::Webpay.log @document
       end
 
       def response
