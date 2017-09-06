@@ -27,6 +27,7 @@ module Transbank
         end
         Transbank::Webpay.log "----- response -----"
         Transbank::Webpay.log @response
+        @response
       end
 
       private
