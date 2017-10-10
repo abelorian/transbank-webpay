@@ -10,7 +10,7 @@ module Transbank
       }.freeze
 
     PAYMENT_TYPE_CODE = {
-      "V2" => "Venta Debito",
+      "VD" => "Venta Debito",
       "VN" => "Venta Normal",
       "VC" => "Venta en cuotas",
       "SI" => "3 cuotas sin interés",
