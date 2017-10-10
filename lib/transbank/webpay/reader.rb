@@ -5,17 +5,7 @@ module Transbank
       attr_reader :content, :action
 
       RESPONSE_CODE = {
-        get_transaction_result: {
-          '0'   => 'transacción aprobada',
-          '-1'  => 'rechazo de transacción',
-          '-2'  => 'transacción debe reintentarse',
-          '-3'  => 'error en transacción',
-          '-4'  => 'rechazo de transacción',
-          '-5'  => 'rechazo por error de tasa',
-          '-6'  => 'excede cupo máximo mensual',
-          '-7'  => 'excede límite diario por transacción',
-          '-8'  => 'rubro no autorizado'
-        },
+        get_transaction_result: Transbank::Webpay::RESPONSE_CODE,
         default: {
           '0'   => 'aprobada',
           '-98' => 'Error'
