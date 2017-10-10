@@ -25,7 +25,6 @@ module Transbank
       private
 
       def calculated_digest
-        Transbank::Webpay.log "----- calculated_digest -----"
         node = doc.at_xpath('//soap:Body')
         node_canonicalize = node.canonicalize(Nokogiri::XML::XML_C14N_EXCLUSIVE_1_0, nil, nil)
         digest = OpenSSL::Digest::SHA1.new.reset.digest(node_canonicalize)
