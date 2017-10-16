@@ -31,6 +31,10 @@ module Transbank
       end
 
       def document
+        p "Get document!!!!"
+
+        p Verifier.verify(signed_xml, Transbank::Webpay::Vault.server_cert)
+
         @document ||= Nokogiri::XML(signed_xml).tap do |signed_document|
           x509data = signed_document.at_xpath("//*[local-name()='X509Data']")
           new_data = x509data.clone
