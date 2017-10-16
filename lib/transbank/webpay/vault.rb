@@ -4,15 +4,15 @@ module Transbank
     class Vault
       class << self
         def cert
-          @cert ||= OpenSSL::X509::Certificate.new open(Transbank::Webpay.configuration.cert_path)
+          @cert = OpenSSL::X509::Certificate.new open(Transbank::Webpay.configuration.cert_path)
         end
 
         def private_key
-          @private_key ||= OpenSSL::PKey::RSA.new open(Transbank::Webpay.configuration.key_path)
+          @private_key = OpenSSL::PKey::RSA.new open(Transbank::Webpay.configuration.key_path)
         end
 
         def server_cert
-          @server_cert ||= begin
+          @server_cert = begin
             path = Transbank::Webpay.configuration.server_cert_path
             OpenSSL::X509::Certificate.new File.read(path)
           end
